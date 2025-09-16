@@ -1,4 +1,6 @@
 streamlit
+torch
+torchvision
 mlflow
 pandas
 plotly
