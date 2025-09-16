@@ -28,7 +28,8 @@ def main(params_path):
 
     # Model
     if model_name == "resnet18":
-        model = models.resnet18(pretrained=True)
+        weights = ResNet18_Weights.DEFAULT
+        model = models.resnet18(weights=weights)
         model.fc = nn.Linear(model.fc.in_features, 2)
     else:
         raise ValueError("Unknown model")
