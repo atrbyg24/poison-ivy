@@ -54,7 +54,6 @@ if uploaded:
     tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
     img.save(tmp.name)
 
-    st.write("Loading model...")
     model_uri = f"runs:/{run_id}/model"
     model = mlflow.pytorch.load_model(model_uri)
     model.eval()
