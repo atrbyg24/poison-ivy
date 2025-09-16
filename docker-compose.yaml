@@ -1,5 +1,6 @@
 services:
   trainer:
+    platform: linux/amd64
     build:
       context: .
       dockerfile: docker/Dockerfile.trainer
@@ -8,6 +9,7 @@ services:
     command: python src/train.py --params params.yaml
 
   streamlit:
+    platform: linux/amd64
     build:
       context: .
       dockerfile: docker/Dockerfile.streamlit
