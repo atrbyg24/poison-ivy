@@ -5,7 +5,8 @@ import mlflow.pytorch
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torchvision import datasets, transforms, models
+from torchvision import datasets, transforms
+from torchvision.models import resnet18, ResNet18_Weights
 from torch.utils.data import DataLoader
 import numpy as np
 
@@ -26,10 +27,9 @@ def main(params_path):
     train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True)
     val_loader = DataLoader(val_ds, batch_size=batch_size)
 
-    # Model
     if model_name == "resnet18":
         weights = ResNet18_Weights.DEFAULT
-        model = models.resnet18(weights=weights)
+        model = resnet18(weights=weights)
         model.fc = nn.Linear(model.fc.in_features, 2)
     else:
         raise ValueError("Unknown model")
@@ -38,8 +38,8 @@ def main(params_path):
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=lr)
 
-    mlflow.set_tracking_uri("http://mlflow:5000")
-    mlflow.set_experiment("toxic-plant-local")
+    mlflow.set_tracking_uri("file:/app/mlruns")
+    mlflow.set_experiment("toxic-plant-classification")
 
     with mlflow.start_run():
         mlflow.log_params({"epochs": epochs, "batch_size": batch_size, "lr": lr, "model": model_name})

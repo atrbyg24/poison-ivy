@@ -10,7 +10,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tempfile
 
-mlflow.set_tracking_uri("http://mlflow:5000")
+mlflow.set_tracking_uri("file:/app/mlruns")
+experiment = mlflow.get_experiment_by_name("toxic-plant-classification")
+
 client = MlflowClient()
 
 st.title("🌱 Toxic Plant Classification - Local MLOps")
