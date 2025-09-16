@@ -5,7 +5,7 @@ import mlflow.pytorch
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torchvision import datasets, transforms
+from torchvision import datasets, transforms as T
 from torchvision.models import resnet18, ResNet18_Weights
 from torch.utils.data import DataLoader
 import numpy as np
@@ -20,7 +20,10 @@ def main(params_path):
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    transform = transforms.Compose([transforms.Resize((224,224)), transforms.ToTensor()])
+    transform = T.Compose([T.Resize((224,224)), 
+                           T.ToTensor(), 
+                           T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                           ])
     train_ds = datasets.ImageFolder("data/processed/train", transform=transform)
     val_ds = datasets.ImageFolder("data/processed/val", transform=transform)
 

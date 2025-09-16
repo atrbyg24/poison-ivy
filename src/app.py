@@ -1,4 +1,3 @@
-# src/streamlit_app.py
 import streamlit as st
 import mlflow
 from mlflow.tracking import MlflowClient
@@ -15,7 +14,7 @@ experiment = mlflow.get_experiment_by_name("toxic-plant-classification")
 
 client = MlflowClient()
 
-st.title("🌱 Toxic Plant Classification - Local MLOps")
+st.title("🌱 Toxic Plant Classification")
 
 experiments = mlflow.search_experiments()
 exp_map = {e.name: e.experiment_id for e in experiments}
@@ -37,7 +36,7 @@ if selected:
         for metric, ax in [("train_loss", axs[0]), ("val_loss", axs[0]), ("train_accuracy", axs[1]), ("val_accuracy", axs[1])]:
             hist = client.get_metric_history(r, metric)
             if hist:
-                df = to_df(hist)
+                df = to_df(hist)[:-1]
                 linestyle = "-" if "train" in metric else "--"
                 ax.plot(df["step"], df["value"], linestyle=linestyle, label=f"{r[:6]}-{metric}")
     axs[0].set_title("Loss"); axs[0].legend()
@@ -58,10 +57,16 @@ if uploaded:
     model = mlflow.pytorch.load_model(model_uri)
     model.eval()
 
-    transform = T.Compose([T.ToTensor()])
-    arr = transform(img).unsqueeze(0)
+    transform = T.Compose([T.Resize((224,224)),
+                           T.ToTensor(),
+                           T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                           ])
+    arr = transform(img).unsqueeze(0)   
+    CLASS_NAMES = {0: 'Nontoxic', 1: 'Toxic'}
     with torch.no_grad():
         out = model(arr)
         probs = torch.softmax(out, dim=1).numpy()[0]
-        pred_class = int(np.argmax(probs))
-    st.write(f"Predicted class: {pred_class} | probs: {probs}")
+        pred_class_idx = int(np.argmax(probs))
+        pred_class_name = CLASS_NAMES.get(pred_class_idx, "Unknown")
+        pred_class_prob = probs[pred_class_idx]
+    st.write(f"The plant is most likely {pred_class_name} with probability {pred_class_prob: .4f}")

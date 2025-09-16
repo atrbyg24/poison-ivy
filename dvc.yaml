@@ -1,12 +1,12 @@
 stages:
   preprocess:
-    cmd: python src/preprocess.py
+    cmd: python3 src/preprocess.py
     deps:
       - data/raw
     outs:
       - data/processed
   train:
-    cmd: python src/train.py --params params.yaml
+    cmd: python3 src/train.py --params params.yaml
     deps:
       - data/processed
       - src/train.py
