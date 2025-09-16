@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  trainer:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.trainer
+    volumes:
+      - .:/app
+    command: python src/train.py --params params.yaml
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.streamlit
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+    command: streamlit run src/dashboard.py --server.port=8501 --server.address=0.0.0.0
