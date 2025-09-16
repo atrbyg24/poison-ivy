@@ -105,7 +105,7 @@ def main(params_path):
             mlflow.log_metric("val_accuracy", val_acc, step=epoch)
 
         os.makedirs("models", exist_ok=True)
-        torch.save(model.state_dict(), "models/model.pt")
+        torch.save(model.state_dict(), f"models/{model_name}.pt")
         mlflow.pytorch.log_model(model, "model")
 
 if __name__ == "__main__":

@@ -36,7 +36,7 @@ if selected:
         for metric, ax in [("train_loss", axs[0]), ("val_loss", axs[0]), ("train_accuracy", axs[1]), ("val_accuracy", axs[1])]:
             hist = client.get_metric_history(r, metric)
             if hist:
-                df = to_df(hist)[:-1]
+                df = to_df(hist)
                 linestyle = "-" if "train" in metric else "--"
                 ax.plot(df["step"], df["value"], linestyle=linestyle, label=f"{r[:6]}-{metric}")
     axs[0].set_title("Loss"); axs[0].legend()
