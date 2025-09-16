@@ -60,7 +60,6 @@ def main(params_path):
             train_loss /= len(train_loader.dataset)
             train_acc = (np.concatenate(all_preds).argmax(axis=1) == np.concatenate(all_labels)).mean()
 
-            # Validation
             model.eval()
             val_loss, val_preds, val_labels = 0.0, [], []
             with torch.no_grad():

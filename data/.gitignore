@@ -1,1 +1,26 @@
-/raw
+# Ignore raw + processed datasets
+data/raw/
+data/processed/
+
+# Ignore DVC cache (data is tracked by .dvc files instead)
+.dvc/cache/
+.dvc/tmp/
+
+# Ignore MLflow artifacts
+mlruns/
+
+# Ignore Python build + env files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Ignore virtual environment folders
+.venv/
+venv/
+
+# Ignore Streamlit cache
+.streamlit/
