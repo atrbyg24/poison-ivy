@@ -4,7 +4,7 @@ An end-to-end **MLOps pipeline** for classifying toxic vs. non-toxic plants usin
 This project demonstrates **data versioning (DVC)**, **experiment tracking (MLflow)**,  
 and a **Streamlit dashboard** for interactive monitoring — all containerized with **Docker**.
 
----
+Data downloaded from Kaggle: https://www.kaggle.com/datasets/hanselliott/toxic-plant-classification/data
 
 ## Features
 - **PyTorch** training with ResNet18, MobileNetV3, and SqueezeNet
