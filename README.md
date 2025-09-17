@@ -1,6 +1,17 @@
-# **Toxic plant classifier**
+## Toxic Plant Classification 
 
-This is an end-to-end ML pipeline for image classification of toxic and nontoxic plants. It uses DVC for managing datasets and MLFlow for experiment tracking. Simple models are created using Pytorch. There is a Streamlit dashboard to analyze different models and the best performing model can be selected for inference by uploading a photo.
+An end-to-end **MLOps pipeline** for classifying toxic vs. non-toxic plants using PyTorch.  
+This project demonstrates **data versioning (DVC)**, **experiment tracking (MLflow)**,  
+and a **Streamlit dashboard** for interactive monitoring — all containerized with **Docker**.
+
+---
+
+## Features
+- **PyTorch** training with ResNet18, MobileNetV3, and SqueezeNet
+- **DVC** for reproducible preprocessing and data management
+- **MLflow** for tracking hyperparameters, metrics, and models
+- **Streamlit** dashboard to compare experiments
+- **Dockerized** training and dashboard environments
 
 ![model metrics and comparison](dashboard.png)
 
